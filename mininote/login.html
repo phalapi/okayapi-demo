@@ -49,27 +49,27 @@
 <div class="header">
   <div class="am-g">
     <h1>迷你日志</h1>
-    <p>小白接口H5开发示例，可体验使用。</p>
+    <p>小白接口H5开发示例，可体验使用。<br /> 采用技术：Vue + Amaze UI + jQuery + OkayApi</p>
   </div>
   <hr />
 </div>
 <div class="am-g">
-  <div class="am-u-lg-6 am-u-md-8 am-u-sm-centered">
+  <div class="am-u-lg-6 am-u-md-8 am-u-sm-centered" id="app">
     <h3>亲，请先登录~</h3>
     <hr>
 
     <form method="post" class="am-form">
-      <label for="email">账号:</label>
-      <input type="email" name="" id="email" value="">
+      <label for="username">账号:</label>
+      <input type="text" name="" id="username" value="" placeholder="请输入登录账号，或新注册的新账号"  v-model="username">
       <br>
       <label for="password">密码:</label>
-      <input type="password" name="" id="password" value="">
+      <input type="password" name="" id="password" value="" placeholder="请输入6位以上的密码" v-model="password">
       <br>
-      <div class="am-cf">
-        <input type="submit" name="" value="   登 录   " class="am-btn am-btn-primary am-btn-sm am-fl">
-        <input type="submit" name="" value="快速注册" class="am-btn am-btn-default am-btn-sm am-fr">
-      </div>
     </form>
+      <div class="am-cf">
+          <button v-on:click="userLogin" class="am-btn am-btn-primary am-btn-sm am-fl">登 录</button>
+          <button  v-on:click="userRegister" class="am-btn am-btn-default am-btn-sm am-fr">快速注册</button>
+      </div>
   </div>
 </div>
 
@@ -93,6 +93,21 @@
     <script src="../js/amazeui.min.js"></script>
     <script src="../js/vue.js"></script>
 
+    <script type="text/javascript">
+    var app = new Vue({
+        el: '#app',
+        data: {
+            username: '',
+            password: ''
+        },
+        methods: {
+            userLogin: function(event) {
+            },
+            userRegister: function(event) {
+            }
+        }
+    })
+    </script>
 
 </body>
 </html>
