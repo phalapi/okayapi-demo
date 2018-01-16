@@ -55,7 +55,10 @@
 </div>
 <div class="am-g">
   <div class="am-u-lg-6 am-u-md-8 am-u-sm-centered" id="app">
-    <h3>亲，请先登录~</h3>
+
+      <div class="am-alert am-alert-success" data-am-alert>
+          <p>{{ tips }}</p>
+      </div>
     <hr>
 
     <form method="post" class="am-form">
@@ -89,7 +92,9 @@
 </div> <!-- pet_mian -->
 
 
-    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/jquery.md5.js"></script>
+    <script src="../js/jquery.cookie.js"></script>
     <script src="../js/amazeui.min.js"></script>
     <script src="../js/vue.js"></script>
 
@@ -98,12 +103,66 @@
         el: '#app',
         data: {
             username: '',
-            password: ''
+            password: '',
+            tips: '亲，请先登录~'
         },
         methods: {
             userLogin: function(event) {
+                if (!this.checkForm()) {
+                    return;
+                }
+
+                var _self = this
+
+                $.ajax({
+                  url: '/okayapi.php',
+                  dataType: 'json',
+                  data: { s: 'App.User.Login', username: this.username, password: $.md5(this.password) }
+                }).done(function (rs) {
+                    if (rs.data && rs.data.err_code == 0) {
+                        _self.tips = '登录成功！正在进入迷你日志……';
+
+                        $.cookie('mn_username', _self.username, { expires: 86400, path: '/', domain: 'demo.okayapi.com'});
+
+                        window.location.href = '/mininote/';
+                    } else {
+                        _self.tips = rs.data.err_msg        
+                    }
+                });
             },
             userRegister: function(event) {
+                if (!this.checkForm()) {
+                    return;
+                }
+
+                var _self = this
+
+                $.ajax({
+                  url: '/okayapi.php',
+                  dataType: 'json',
+                  data: { s: 'App.User.Register', username: this.username, password: $.md5(this.password) }
+                }).done(function (rs) {
+                    if (rs.data && rs.data.err_code == 0) {
+                        _self.tips = '注册成功！正在登录……';
+
+                        // 自动登录
+                        _self.userLogin(event)
+                    } else {
+                        _self.tips = rs.data.err_msg        
+                    }
+                });
+            },
+            checkForm: function() {
+                if (this.username.length == 0) {
+                    this.tips = '请先输入账号！';
+                    return false;
+                }
+                if (this.password.length < 6) {
+                    this.tips = '请先输入至少6位密码！';
+                    return false;
+                }
+
+                return true;
             }
         }
     })

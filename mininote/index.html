@@ -11,7 +11,7 @@
   <title>首页 - 迷你日志</title>
 </head>
 <body style="background:#ececec">
-  <div class="pet_mian" >
+  <div class="pet_mian" id="app" >
     <div class="pet_head">
       <header data-am-widget="header"
           class="am-header am-header-default pet_head_block">
@@ -37,7 +37,7 @@
             <a class="pet_more_list_block_line"> <i class="iconfont pet_nav_zhangzhishi pet_more_list_block_line_ico">&#xe607;</i>
               <div class="pet_more_list_block_line_font">查看</div>
             </a>
-            <a class="pet_more_list_block_line">
+            <a class="pet_more_list_block_line" href="/mininote/login.html" >
               <i class="iconfont pet_nav_kantuya pet_more_list_block_line_ico">&#xe62c;</i>
               <div class="pet_more_list_block_line_font">退出</div>
             </a>
@@ -80,7 +80,7 @@
 
           </div>
 
-          <div class="pet_grzx_list">
+          <div class="pet_grzx_list" id="app_list">
              <div class="pet_content_main pet_article_like_delete">
           <div data-am-widget="list_news" class="am-list-news am-list-news-default am-no-layout">
             <div class="am-list-news-bd">
@@ -111,8 +111,22 @@
         <ul class="like_share_block">
         <li><a class="link_share_button" href="###"><i class="am-icon-circle-o-notch"></i>加载更多</a></li>
         <li><a class="link_share_button" href="###"><i class="am-icon-edit"></i>写日志</a></li>
-        <li><a class="link_share_button" href="###"><i class="iconfont share_ico_pyq">&#xe62e;</i>朋友圈</a></li>
+        <li><a iv-on:click="promptProfile" class="link_share_button" href="javascript:void(0)"><i class="am-icon-user"></i>个人资料</a></li>
       </ul>
+
+      <div class="am-modal am-modal-prompt" tabindex="-1" id="my-prompt">
+          <div class="am-modal-dialog">
+              <div class="am-modal-hd">个人资料</div>
+              <div class="am-modal-bd">
+                  您当前所在的城市是？
+                  <input type="text" class="am-modal-prompt-input">
+              </div>
+              <div class="am-modal-footer">
+                  <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+                  <span class="am-modal-btn" data-am-modal-confirm>提交</span>
+              </div>
+          </div>
+      </div>
 
           </div>
 <div class="pet_article_dowload">
@@ -129,8 +143,10 @@
         <div class="pet_article_footer_info">Copyright © 2018 OkayApi All Rights Reserved</div>
       </div>
     </div>
-    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/vue.js"></script>
     <script src="../js/amazeui.min.js"></script>
+
     <script>
 $(function(){
 
@@ -139,10 +155,12 @@ $(function(){
     $(window).resize(function() {
         auto_resize();
     });
+    /**
     $('.am-list-thumb img').load(function(){
         auto_resize();
     });
     $('.pet_article_like li:last-child').css('border','none');
+        **/
         function auto_resize(){
         $('.pet_list_one_nr').height($('.pet_list_one_img').height());
                 // alert($('.pet_list_one_nr').height());
@@ -162,7 +180,31 @@ $(function(){
             $('.pet_more_list').removeClass('pet_more_list_show');
         });
 });
-
 </script>
+
+
+
+    <script type="text/javascript">
+    var app = new Vue({
+        el: '#app',
+        data: {
+        },
+        methods: {
+            promptProfile: function (event) {
+            alert('hit me')
+              $('#my-prompt').modal({
+                relatedTarget: this,
+                  onConfirm: function(e) {
+                    alert('你输入的是：' + e.data || '')
+                  },
+                  onCancel: function(e) {
+                    alert('不想说!');
+                  }
+               });
+            }
+        }
+    })
+    </script>
+
 </body>
   </html>

@@ -16,12 +16,7 @@ define('OKAYAPI_APP_SECRECT', $_ENV['OKAYAPI_APP_SECRECT']);    // TODO: 请在�
 
 $params = $_REQUEST;
 
-// 签名
-$params['app_key'] = OKAYAPI_APP_KEY;
-$params['sign'] = encryptAppKey($params, OKAYAPI_APP_SECRECT);
-
 session_start();
-
 // 自动加上会话凭证
 if (isset($_SESSION['uuid'])) {
 	$params['uuid'] = $_SESSION['uuid'];
@@ -29,6 +24,10 @@ if (isset($_SESSION['uuid'])) {
 if (isset($_SESSION['token'])) {
 	$params['token'] = $_SESSION['token'];
 }
+
+// 签名
+$params['app_key'] = OKAYAPI_APP_KEY;
+$params['sign'] = encryptAppKey($params, OKAYAPI_APP_SECRECT);
 
 // 请求小白接口
 $ch = curl_init();
