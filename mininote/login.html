@@ -124,6 +124,10 @@
 
                         $.cookie('mn_username', _self.username, { expires: 86400, path: '/', domain: 'demo.okayapi.com'});
 
+                        // 保存登录凭证
+                        $.cookie('mn_uuid', rs.data.uuid, { expires: 86400, path: '/', domain: 'demo.okayapi.com'});
+                        $.cookie('mn_token', rs.data.token, { expires: 86400, path: '/', domain: 'demo.okayapi.com'});
+
                         window.location.href = '/mininote/';
                     } else {
                         _self.tips = rs.data.err_msg        

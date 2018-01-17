@@ -8,7 +8,7 @@
   <link rel="alternate icon" type="image/png" href="../img/favicon.png">
   <link rel="stylesheet" href="../css/amazeui.min.css">
   <link rel="stylesheet" href="../css/wap.css">
-  <title>写日志 - 迷你日志</title>
+  <title>查看 - 迷你日志</title>
 </head>
 <body style="background:#ececec">
   <div class="pet_mian" id="app" >
@@ -18,7 +18,7 @@
         <div class="am-header-left am-header-nav ">
           <a href="/mininote/" class="iconfont pet_head_jt_ico">&#xe601;</a>
         </div>
-<div class="pet_news_list_tag_name">写日志</div>
+<div class="pet_news_list_tag_name">日志</div>
         <div class="am-header-right am-header-nav">
           <a href="javascript:;" class="iconfont pet_head_gd_ico">&#xe600;</a>
         </div>
@@ -80,7 +80,7 @@
                 </fieldset>
             </form>
 
-            <p><button v-on:click="postNew" class="am-btn am-btn-success  am-btn-block">保存日志</button> <br />{{ tips }}</p>
+            <p><button v-on:click="updateNote" class="am-btn am-btn-success  am-btn-block">更新日志</button> <br />{{ tips }}</p>
 
             <div class="pet_article_dowload">
                   <div class="pet_article_dowload_title">小白接口开发示例</div>
@@ -139,15 +139,42 @@ $(function(){
 
 
     <script type="text/javascript">
+    //获取url中的参数
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return unescape(r[2]); return null; //返回参数值
+    }
+
     var app = new Vue({
         el: '#app',
         data: {
             note_title: '',
             note_content: '',
-            tips: ''
+            tips: '',
+            note_id: getUrlParam('id')
         },
         methods: {
-            postNew: function (event) {
+            init: function() {
+                var _self = this
+
+                $.ajax({
+                  url: '/okayapi.php',
+                  dataType: 'json',
+                  data: { s: 'App.User_Set.GetItem', key: 'mini_note', id: _self.note_id }
+                }).done(function (rs) {
+                    if (rs.data && rs.data.err_code == 0) {
+                        _self.note_title = rs.data.data.note_title
+                        _self.note_content = rs.data.data.note_content
+
+                    } else {
+                        _self.tips = rs.data.err_msg        
+                    }
+                });
+
+            },
+            updateNote: function (event) {
+
                 if (!this.checkForm()) {
                     return;
                 }
@@ -162,12 +189,11 @@ $(function(){
                 $.ajax({
                   url: '/okayapi.php',
                   dataType: 'json',
-                  data: { s: 'App.User_Set.Add', key: 'mini_note', data: JSON.stringify(metaData), visiable: 'private' }
+                  data: { s: 'App.User_Set.Update', key: 'mini_note', data: JSON.stringify(metaData), id: _self.note_id }
                 }).done(function (rs) {
                     if (rs.data && rs.data.err_code == 0) {
-                        _self.tips = '添加成功！正在返回首页……';
+                        _self.tips = '更新成功！';
 
-                        window.location.href = '/mininote/';
                     } else {
                         _self.tips = rs.data.err_msg        
                     }
@@ -186,6 +212,8 @@ $(function(){
             }
         }
     })
+
+    app.init()
     </script>
 
 </body>

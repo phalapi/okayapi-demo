@@ -11,8 +11,8 @@
 
 // 如果需要查看你的app_key和app_secrect，可访问：http://admin.okayapi.com/?r=Site/Mine
 
-define('OKAYAPI_APP_KEY', $_ENV['OKAYAPI_APP_KEY']);        // TODO: 请在此处输入你的app_key
-define('OKAYAPI_APP_SECRECT', $_ENV['OKAYAPI_APP_SECRECT']);    // TODO: 请在此处输入你的app_secrect
+define('OKAYAPI_APP_KEY', '16BD4337FB1D355902E0502AFCBFD4DF');        // TODO: 请在此处输入你的app_key
+define('OKAYAPI_APP_SECRECT', '4c1402596e4cd017eeaO670df6f8B6783475b4ac8A32B4900f20abP2159711ad');    // TODO: 请在此处输入你的app_secrect
 
 $params = $_REQUEST;
 
