@@ -8,7 +8,7 @@
   <link rel="alternate icon" type="image/png" href="../img/favicon.png">
   <link rel="stylesheet" href="../css/amazeui.min.css">
   <link rel="stylesheet" href="../css/wap.css">
-  <title>首页 - 迷你日志</title>
+  <title>写日志 - 迷你日志</title>
 </head>
 <body style="background:#ececec">
   <div class="pet_mian" id="app" >
@@ -16,9 +16,9 @@
       <header data-am-widget="header"
           class="am-header am-header-default pet_head_block">
         <div class="am-header-left am-header-nav ">
-          <!-- <a href="#left-link" class="iconfont pet_head_jt_ico">&#xe601;</a> -->
+          <a href="/mininote/" class="iconfont pet_head_jt_ico">&#xe601;</a>
         </div>
-<div class="pet_news_list_tag_name">迷你日志</div>
+<div class="pet_news_list_tag_name">写日志</div>
         <div class="am-header-right am-header-nav">
           <a href="javascript:;" class="iconfont pet_head_gd_ico">&#xe600;</a>
         </div>
@@ -60,84 +60,38 @@
       </div>
     </div>
 
-    <div class="pet_content pet_content_list">
-      <div class="pet_grzx">
+      <div class="pet_content pet_content_list">
+        <div class="pet_grzx">
 
-          <div class="pet_grzx_nr">
-              <div class="pet_grzx_ico">
-                  <img src="../img/logo.png" alt="">
-              </div>
-              <div class="pet_grzx_name">dogstar</div>
-              <div class="pet_grzx_map">广州</div>
-              <div class="pet_grzx_num_font">
-此H5应用是小白接口的开发示例，源代码下载请前往码云<a href="https://gitee.com/dogstar/okayapi-demo">okayapi-demo</a>。
-              </div>
-              <div class="pet_grzx_num">
-                  <span>{{ note_total }}<i>日志</i></span>
-                <span>0<i>收藏</i></span>
-                <span>896<i>访问</i></span>
-              </div>
+            <form class="am-form">
+                <fieldset>
+                    <br />
+                    <!-- <legend>添加新日志</legend> -->
 
-          </div>
+                    <div class="am-form-group">
+                        <p><input v-model="note_title" type="text" class="am-form-field am-round" placeholder="请在输入日志标题"/></p>
+                    </div>
 
-          <div class="pet_grzx_list" id="app_list">
-             <div class="pet_content_main pet_article_like_delete">
-          <div data-am-widget="list_news" class="am-list-news am-list-news-default am-no-layout">
-            <div class="am-list-news-bd">
-              <ul class="am-list">
-                <!--缩略图在标题右边-->
-                 <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-right pet_list_one_block">
+                    <div class="am-form-group">
+                        <label for="doc-ta-1">日志内容</label>
+                        <textarea v-model="note_content" class="" rows="15" id="doc-ta-1"></textarea>
+                    </div>
 
-        <div class=" am-u-sm-8 am-list-main pet_list_one_nr">
-            <h3 class="am-list-item-hd pet_list_one_bt"><a href="###" class="">Vue开发实践备忘！渐进式JavaScript 框架</a></h3>
-            <div class="am-list-item-text pet_list_one_text">Vue (读音 /vjuː/，类似于 view) 是一套用于构建用户界面的渐进式框架。与其它大型框架不同的是，Vue 被设计为可以自底向上逐层应用。Vue 的核心库只关注视图层，不仅易于上手，还便于与第三方库或既有项目整合。</div>
+                </fieldset>
+            </form>
 
-        </div>
-          <div class="am-u-sm-4 am-list-thumb">
-            <a href="###" class="">
-              <img src="../img/vue.jpg" class="pet_list_one_img" alt=""/>
-            </a>
-          </div>
-      </li>
+      <p>&nbsp;&nbsp;<button v-on:click="postNew" class="am-btn am-btn-success">保存日志</button> &nbsp;&nbsp;{{ tips }}</p>
 
-
-                </ul>
+            <div class="pet_article_dowload">
+                  <div class="pet_article_dowload_title">小白接口开发示例</div>
+                  <div class="pet_article_dowload_content"><div class="pet_article_dowload_triangle"></div>
+                  <div class="pet_article_dowload_ico"><img src="../img/logo_min.png" alt=""></div>
+                  <div class="pet_article_dowload_content_font">
+            小白接口，是免费，免开发，直接可用的云端数据接口！<br/>我们致力于提供让每个开发者都能轻松使用的云端接口。
+                  </div>
+                  </div>
               </div>
 
-            </div>
-
-          </div>
-
-        <ul class="like_share_block">
-        <li><a class="link_share_button" href="###"><i class="am-icon-circle-o-notch"></i>加载更多</a></li>
-        <li><a class="link_share_button" href="/mininote/new.html"><i class="am-icon-edit"></i>写日志</a></li>
-        <li><a iv-on:click="promptProfile" class="link_share_button" href="javascript:void(0)"><i class="am-icon-user"></i>个人资料</a></li>
-      </ul>
-
-      <div class="am-modal am-modal-prompt" tabindex="-1" id="my-prompt">
-          <div class="am-modal-dialog">
-              <div class="am-modal-hd">个人资料</div>
-              <div class="am-modal-bd">
-                  您当前所在的城市是？
-                  <input type="text" class="am-modal-prompt-input">
-              </div>
-              <div class="am-modal-footer">
-                  <span class="am-modal-btn" data-am-modal-cancel>取消</span>
-                  <span class="am-modal-btn" data-am-modal-confirm>提交</span>
-              </div>
-          </div>
-      </div>
-
-          </div>
-<div class="pet_article_dowload">
-      <div class="pet_article_dowload_title">小白接口开发示例</div>
-      <div class="pet_article_dowload_content"><div class="pet_article_dowload_triangle"></div>
-      <div class="pet_article_dowload_ico"><img src="../img/logo_min.png" alt=""></div>
-      <div class="pet_article_dowload_content_font">
-小白接口，是免费，免开发，直接可用的云端数据接口！<br/>我们致力于提供让每个开发者都能轻松使用的云端接口。
-      </div>
-      </div>
-  </div>
         </div>
 
         <div class="pet_article_footer_info">Copyright © 2018 OkayApi All Rights Reserved</div>
@@ -188,43 +142,50 @@ $(function(){
     var app = new Vue({
         el: '#app',
         data: {
-            note_total: 0,
-            page: 1,
-            perpage: 10
+            note_title: '',
+            note_content: '',
+            tips: ''
         },
         methods: {
-            init: function() {
+            postNew: function (event) {
+                if (!this.checkForm()) {
+                    return;
+                }
+
                 var _self = this
+
+                var metaData = {
+                    note_title: this.note_title,
+                    note_content: this.note_content
+                }
 
                 $.ajax({
                   url: '/okayapi.php',
                   dataType: 'json',
-                  data: { s: 'App.User_Set.GetList', key: 'mini_note', sort: '52', page: this.page, perpage: this.perpage }
+                  data: { s: 'App.User_Set.Add', key: 'mini_note', data: JSON.stringify(metaData), visiable: 'private' }
                 }).done(function (rs) {
                     if (rs.data && rs.data.err_code == 0) {
-                        console.log(rs)
+                        _self.tips = '添加成功！正在返回首页……';
+
+                        window.location.href = '/mininote/';
                     } else {
-                        // 未登录
                         _self.tips = rs.data.err_msg        
                     }
                 });
             },
-            promptProfile: function (event) {
-            alert('hit me')
-              $('#my-prompt').modal({
-                relatedTarget: this,
-                  onConfirm: function(e) {
-                    alert('你输入的是：' + e.data || '')
-                  },
-                  onCancel: function(e) {
-                    alert('不想说!');
-                  }
-               });
+            checkForm: function() {
+                if (this.note_title.length == 0) {
+                    this.tips = '小主，日志标题还没填哦~';
+                    return false;
+                }
+                if (this.note_content.length == 0) {
+                    this.tips = '小主，日志内容还没有哦~';
+                    return false;
+                }
+                return true;
             }
         }
     })
-
-    app.init();
     </script>
 
 </body>
