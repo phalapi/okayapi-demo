@@ -1,0 +1,62 @@
+ 
+<script src="http://cdn.bootcss.com/blueimp-md5/1.1.0/js/md5.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+ <script>
+ /**
+  * 准备接口参数
+  */
+ var params = {
+	s: "Hello.World", 		// 待请求的接口服务名称
+	name: "dogstar", 		// 更多接口参数
+	callback: "onCallback" 	// 客户端的JS回调函数
+ };
+
+/**
+ * 发起JSONP请求
+ */
+ $.ajax({
+  url: 'http://api.okayapi.com/',
+  dataType: 'jsonp',
+  jsonpCallback: params.callback,
+  cache: true,
+  data: enryptData(params)
+}).done(function (rs) {
+	console.log("done");
+    console.log(rs);
+});
+
+/**
+ * TODO: 客户端的JS回调函数
+ */
+function onCallback(rs) {
+	console.log("onCallback");
+	console.log(rs);
+
+	alert("小白接口请求完毕，请查看控制台！");
+}
+
+/**
+ * 生成小白接口签名
+ */
+function enryptData(params) {
+
+	 const OKAYAPI_APP_KEY = "16BD4337FB1D355902E0502AFCBFD4DF";
+	 const OKAYAPI_APP_SECRECT = "4c1402596e4cd017eeaO670df6f8B6783475b4ac8A32B4900f20abP2159711ad"; // TODO：请勿对外暴露！！
+
+	 params['app_key'] = OKAYAPI_APP_KEY;
+
+	 var sdic = Object.keys(params).sort();
+	 var paramsStrExceptSign  = "";
+	 for(ki in sdic){                     
+	    paramsStrExceptSign  += params[sdic[ki]];
+	 }
+
+	 var sign = md5(paramsStrExceptSign + OKAYAPI_APP_SECRECT).toUpperCase();
+	 params['sign'] = sign;
+
+	 return params;
+}
+
+ </script>
+
