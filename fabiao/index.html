@@ -136,21 +136,21 @@
       <h2 class="detail-h2">我的发票</h2>
 
       <div class="am-g">
-        <div class="am-u-lg-3 am-u-md-6 am-u-sm-12 detail-mb">
+        <div class="am-u-lg-3 am-u-md-6 am-u-sm-12 detail-mb" v-for="item in fabiao_list" >
 
           <h3 class="detail-h3">
             <i class="am-icon-smile-o am-icon-sm" aria-hidden="true"></i>
 
-            广州市XXX公司
+            {{ item.company_name }}
           </h3>
 
           <p class="detail-p">
-            纳税人识别号：9144xxxxxxx514927N
-          <br /><a href="">查看二维码</a>
+          纳税人识别号：{{ item.company_id }}
+          <br /><a :href="'http://api.okayapi.com/?service=Ext.QrCode.Png&size=6&data=' + item.company_id " target="_blank" >查看二维码</a>
           </p>
           <p class="detail-p">
-            企业地址：广州市天河区xxx路xxx号xxx区
-          <br /><a  href="">查看二维码</a>
+          企业地址：{{ item.company_address }}
+          <br /><a  :href="'http://api.okayapi.com/?service=Ext.QrCode.Png&size=6&data=' + item.company_address " target="_blank" >查看二维码</a>
           </p>
 
         </div>
@@ -253,8 +253,10 @@
                   dataType: 'json',
                   data: { s: 'App.Main_Set.GetList', key: cid, sort: "2", perpage: 4 } // 取前4个，按创建时间逆序
                 }).done(function (rs) {
+                    console.log(rs)
+
                     if (rs.data && rs.data.err_code == 0) {
-                        $.each(rs.data.items, function (el) {
+                        $.each(rs.data.items, function (index, el) {
                           let item = {
                             company_id: el.data.company_id,
                             company_name: el.data.company_name,
