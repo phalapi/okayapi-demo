@@ -1,5 +1,7 @@
 # 小白接口H5示例集合
 
+> 新技能：成功开通[小白接口](http://www.okayapi.com/?f=gitee)后，将okayapi.php中的app_key和app_secrect换成自己的，即可马上使用这些示例应用啦~~
+
 ## 1、H5迷你日志
 
 使用Amaze UI+VUE+JQuery+小白接口实现开发一个迷你版的日记，用于纪录私人生活感想。　
