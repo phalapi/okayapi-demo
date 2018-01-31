@@ -13,33 +13,35 @@
 import requests
 import hashlib
 
+# TODO: 请根据需要，换成您的HOST，app_key和app_secrect
+API_URL     = 'http://api.okayapi.com/'
+APP_KEY     = '16BD4337FB1D355902E0502AFCBFD4DF'
+APP_SECRET  = '4c1402596e4cd017eeaO670df6f8B6783475b4ac8A32B4900f20abP2159711ad'
 
 # 生成签名
-def Signature(params, secrect):
+def Signature(params, key=None, secret=None):
+    key = key or APP_KEY
+    secret = secret or APP_SECRET
+    params.pop('app_secrect', None)
+    params['app_key'] = key
     md5_ctx = hashlib.md5()
-    md5_ctx.update(''.join([params[value] for value in sorted([key for key in params])]) + secrect)
+    md5_ctx.update(''.join([params[value] for value in sorted([key for key in params])]) + secret)
     return md5_ctx.hexdigest().upper()
     
 
 # 请求小白接口
-def HTTPGet(url, params, app_secrect):
-    params['sign'] = Signature(params, app_secrect)
+def HTTPGet(url, params):
+    params['sign'] = Signature(params)
     resp = requests.get(url, params)
     return resp.json()
 
 
 def main():
-    # TODO: 请根据需要，换成您的HOST，app_key和app_secrect
-    url = 'http://api.okayapi.com/'
-    app_key = '16BD4337FB1D355902E0502AFCBFD4DF'
-    app_secrect = '4c1402596e4cd017eeaO670df6f8B6783475b4ac8A32B4900f20abP2159711ad'
-
     # 待请求的接口与相关参数
-    params = {'s': 'Hello.World', 'name': 'dogstar', 'app_key': app_key}
+    params = {'s': 'Hello.World', 'name': 'dogstar'}
 
     # 发起请求
-    rs = HTTPGet(url, params, app_secrect)
+    return HTTPGet(API_URL, params)
 
-    return rs
 
 print(main())
