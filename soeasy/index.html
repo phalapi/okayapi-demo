@@ -71,11 +71,18 @@
 
               <p>最近留言，显示最近10条留言。</p>
               <table class="table table-hover">
-              <tbody>
+              <thead>
                 <tr>
-                  <td><font color="gray">2018-02-11 14:03</font></td>
-                  <td>终于上线了留言板，好鸡冻，大家会说啥呢 ^_^</td>
-                  <td>@dogstar</td>
+                  <th>时间</th>
+                  <th>留言内容</th>
+                  <th>昵称</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="comment_item in comment_list">
+                  <td><font color="gray">{{ comment_item.add_time }}</font></td>
+                  <td>{{ comment_item.data.comment_content }}</td>
+                  <td>@{{ comment_item.data.comment_username }}</td>
                 </tr>
                 <tr>
                   <td><font color="gray">2018-02-11 14:03</font></td>
@@ -85,6 +92,31 @@
               </tbody>
               </table>
             </div>
+
+            <div class="col-xs-12 col-lg-12" data-example-id="basic-forms">
+            <p>留言评论：</p>
+              <form class="form-horizontal">
+                <div class="form-group">
+                  <label for="input_comment_user" class="col-sm-2 control-label">您的昵称</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="input_comment_user" v-model="comment_user" placeholder="">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="input_comment_content" class="col-sm-2 control-label">留言内容</label>
+                  <div class="col-sm-10">
+                    <textarea class="form-control" rows="3" v-model="comment_content" id="input_comment_content" placeholder="亲，请文明留言哦~"></textarea>
+                  </div>
+                </div>
+              </form>
+                <div class="form-group">
+                  <div class="col-sm-offset-2 col-sm-10">
+                    <button v-on:click="addComment" type="submit" class="btn btn-success">发表留言</button>
+                  </div>
+                </div>
+            </div>
+
+
           </div>
           <!-- 在线留言（结束） -->
 
@@ -180,7 +212,10 @@ mollis euismod. Donec sed odio dui. </p>
 var appComments = new Vue({
     el: '#appComments',
     data: {
-        comment_list: []
+        comment_list: [],
+        new_comment_username: '',
+        new_comment_content: '',
+        tips: ''
     },
 
     methods: {
@@ -203,7 +238,40 @@ var appComments = new Vue({
                     console.log(rs.data.err_msg)
                 }
             });
+        },
+
+        addComment: function (event) {
+            if (this.new_comment_username.length == 0) {
+                this.tips = '亲，留言昵称不能为空~';
+                return false;
+            }
+            if (this.new_comment_content.length == 0) {
+                this.tips = '亲，留言内容不能为空~';
+                return false;
+            }
+
+            var _self = this
+
+            var setData = {
+                comment_user: _self.new_comment_username,
+                comment_content: _self.new_comment_content
+            }
+
+            $.ajax({
+              url: '/okayapi.php',
+              dataType: 'json',
+              data: { s: 'App.Main_Set.Add', key: 'demo_comments', data: JSON.stringify(setData)}
+            }).done(function (rs) {
+                if (rs.data && rs.data.err_code == 0) {
+                    _self.tips = '留言成功！';
+
+                    _self.loadComments(null)
+                } else {
+                    console.log(rs.data.err_msg)       
+                }
+            });
         }
+    }
     }
 })
 
