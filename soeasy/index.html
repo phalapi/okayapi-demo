@@ -44,8 +44,8 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="/mininote/">H5小应用：迷你日记</a></li>
+            <li><a href="/fabiao/">小应用：发票小助手</a></li>
           </ul>
         </div><!-- /.nav-collapse -->
       </div><!-- /.container -->
@@ -74,7 +74,7 @@
               <h3>最新留言</h3>
               <p>显示最近10条留言。</p>
               <ul>
-                  <li>使用到的接口：<a href="http://api.okayapi.com/docs.php?service=App.Main_Set.GetList&detail=1&type=fold" target="_blank">获取集合列表（App.Main_Set.GetList）</a></li>
+                  <li>用到的接口：<a href="http://api.okayapi.com/docs.php?service=App.Main_Set.GetList&detail=1&type=fold" target="_blank">获取集合列表（App.Main_Set.GetList）</a></li>
               </ul>
               <hr />
 
@@ -105,7 +105,7 @@
                 <h3>我要留言</h3>
                 <p>游客可自由留言评论。</p>
               <ul>
-                  <li>使用到的接口：<a href="http://api.okayapi.com/docs.php?service=App.Main_Set.Add&detail=1&type=fold" target="_blank">添加元素（App.Main_Set.Add）</a></li>
+                  <li>用到的接口：<a href="http://api.okayapi.com/docs.php?service=App.Main_Set.Add&detail=1&type=fold" target="_blank">添加元素（App.Main_Set.Add）</a></li>
               </ul>
               <hr />
 
@@ -139,10 +139,126 @@
           </div>
           <!-- 在线留言（结束） -->
 
+          <!-- 二维码 (START) -->
+          <div class="row" id="qrCode" >
+            <div class="col-xs-12 col-lg-12">
+              <h2>二维码</h2>
+            <h3>生成二维码</h3>
+            <p>根据文本内容，生成二维码图片。</p>
+            <ul>
+                <li>用到的接口：<a href="http://api.okayapi.com/docs.php?service=Ext.QrCode.Png&detail=1&type=fold" target="_blank">根据文本内容，生成二维码（Ext.QrCode.Png）</a></li>
+            </ul>
+            <hr />
+
+              <form class="form-horizontal">
+                <div class="form-group">
+                  <label for="input_qrcode_str" class="col-sm-2 control-label">二维码文本内容</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="input_qrcode_str" placeholder="" value="OkayApi" >
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-offset-2 col-sm-10">
+                    <a type="submit" class="btn btn-success" href="javascrpit:void(0)" onclick="createQrCode()" >生成二维码</a>
+                  </div>
+                </div>
+              </form>
+
+              <img src="http://api.okayapi.com/?s=Ext.QrCode.Png&data=OkayApi&size=10" id="qrcode_img" />
+              
+              <div class="alert alert-success" role="alert">
+                  <strong>划重点！</strong> 生成二维码接口，不需要签名，可直接使用。接口链接相当于图片链接，可直接显示二维码图片。
+              </div>
+            </div>
+         </div>
+         <!-- 二维码 (END) -->
+
+          <!-- 条形码 (START) -->
+          <div class="row" id="barCode" >
+            <div class="col-xs-12 col-lg-12">
+              <h2>条形码</h2>
+            <h3>生成条形码</h3>
+            <p>根据文本内容，生成条形码图片。</p>
+            <ul>
+                <li>用到的接口：<a href="http://api.okayapi.com/docs.php?service=Ext.BarCode.Gen&detail=1&type=fold" target="_blank">根据内容，生成条形码（Ext.BarCode.Gen）</a></li>
+            </ul>
+            <hr />
+
+              <form class="form-horizontal">
+                <div class="form-group">
+                  <label for="input_barcode_str" class="col-sm-2 control-label">条形码</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="input_barcode_str" placeholder="" value="123456789" >
+                  </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"></label>
+                  <div class="col-sm-10">
+                    <img src="http://api.okayapi.com/?s=Ext.BarCode.Gen&check_sum=123456789&" id="barcode_img" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-offset-2 col-sm-10">
+                    <a type="submit" class="btn btn-success" href="javascrpit:void(0)" onclick="createBarCode()" >生成条形码</a>
+                  </div>
+                </div>
+              </form>
+              
+              <div class="alert alert-success" role="alert">
+                  <strong>划重点！</strong> 生成条形码接口，不需要签名，可直接使用。接口链接相当于图片链接，可直接显示条形码图片。
+              </div>
+            </div>
+         </div>
+         <!-- 条形码 (END) -->
+
+         <!-- 验证码 (START) -->
+         <div class="row" id="verifyCode" >
+           <div class="col-xs-12 col-lg-12">
+             <h2>验证码</h2>
+           <h3>显示验证码、核对验证码</h3>
+           <p>根据小白后台的配置，显示相应的验证码图片。并且可以对用户输入的验证码进行校验。</p>
+           <ul>
+               <li>用到的接口：<a href="http://api.okayapi.com/docs.php?service=App.Captcha.Create&detail=1&type=fold" target="_blank">创建新的验证码（App.Captcha.Create）、<a href="http://api.okayapi.com/docs.php?service=App.Captcha.Verify&detail=1&type=fold" target="_blank">校对验证码（App.Captcha.Verify）</a></li>
+           </ul>
+           <hr />
+
+             <form class="form-horizontal">
+               <div class="form-group">
+                 <label for="input_verifycode_str" class="col-sm-2 control-label">验证码</label>
+                 <div class="col-sm-10">
+                   <input type="text" class="form-control" id="input_verifycode_str" placeholder="请输入以下显示的验证码" value="" >
+                 </div>
+               </div>
+               <div class="form-group">
+                 <label  class="col-sm-2 control-label"></label>
+                 <div class="col-sm-10">
+                    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" id="verifycode_img" width="150" height="40">
+                 </div>
+               </div>
+               <div class="form-group">
+                 <div class="col-sm-offset-2 col-sm-10">
+                   <a type="submit" class="btn btn-success" href="javascrpit:void(0)" onclick="verifyCaptcha()" >校对验证码</a>
+                   <a href="javascrpit:void(0)" onclick="createCaptcha()">刷新验证码</a>
+                 </div>
+               </div>
+             </form>
+              
+              <div class="alert alert-success" role="alert">
+                  <strong>划重点！</strong> 验证码需要先生成，再核对。生成时，注意保留captcha_id，以便在核对时回传给服务端。更高级的配置，可进行小白后台设置。
+              </div>
+
+           </div>
+           </div>
+         <!-- 条形码 (END) -->
+
+      </div> <!-- 全部示例 END -->
+
         <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
           <div class="list-group">
             <a href="#appComments" class="list-group-item">在线留言</a>
-            <a href="#" class="list-group-item">Link</a>
+            <a href="#qrCode" class="list-group-item">二维码</a>
+            <a href="#barCode" class="list-group-item">条形码</a>
+            <a href="#verifyCode" class="list-group-item">验证码</a>
           </div>
         </div><!--/.sidebar-offcanvas-->
       </div><!--/row-->
@@ -167,6 +283,9 @@
   
     <!-- 在线留言 -->
     <script src="./comments.js" ></script>
+    <script src="./qrcode.js" ></script>
+    <script src="./barcode.js" ></script>
+    <script src="./verifycode.js" ></script>
 
 </body>
 </html>
