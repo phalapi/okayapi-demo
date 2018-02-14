@@ -61,7 +61,9 @@
           </p>
           <div class="jumbotron">
             <h1>在线示例大全</h1>
-            <p>本页面的示例源代码，可在码云下载。为了更好地体验示例效果，推荐使用最新浏览器进行访问。</p>
+            <p>本页面示例基于Vue.js + Bootstrap开发，主要演示小白接口的使用。为了更好地体验示例效果，推荐使用最新浏览器进行访问。</p>
+            <p>其他客气端，诸如C#、Android、iOS、Python等，接口用法类似。</p>
+            <a href="https://gitee.com/dogstar/okayapi-demo" target="_blank" class="btn btn-info" >下载源代码</a>
           </div>
 
           <!-- 在线留言（开始） -->
@@ -211,88 +213,8 @@ mollis euismod. Donec sed odio dui. </p>
     <script src="../js/offcanvas.js"></script>
     <script src="../js/vue.js"></script>
   
+    <!-- 在线留言 -->
+    <script src="./comments.js" ></script>
 
-
-          <script type="text/javascript">
-var appComments = new Vue({
-    el: '#appComments',
-    data: {
-        comment_list: [],
-        new_comment_username: '',
-        new_comment_content: '',
-        tips: ''
-    },
-
-    methods: {
-        init: function() {
-
-            this.loadComments(null)
-        },
-        loadComments: function (event) {
-            let _self = this
-            let params = { 
-                    s: 'App.Main_Set.GetList', 
-                    key: 'demo_comments', 
-                    page: 1, 
-                    perpage: 10,
-                    sort: '2'
-                }
-
-            $.ajax({
-              url: '/okayapi.php',
-              dataType: 'json',
-              data: params
-            }).done(function (rs) {
-                if (rs.data && rs.data.err_code == 0) {
-                    _self.comment_list = rs.data.items
-                } else {
-                    console.log(rs.data.err_msg)
-                }
-            });
-        },
-
-        addComment: function (event) {
-            if (this.new_comment_username.length == 0) {
-                this.tips = '亲，留言昵称不能为空~';
-                return false;
-            }
-            if (this.new_comment_content.length == 0) {
-                this.tips = '亲，留言内容不能为空~';
-                return false;
-            }
-
-            let _self = this
-            let setData = {
-                    comment_username: _self.new_comment_username,
-                    comment_content: _self.new_comment_content
-                }
-            let params = { 
-                    s: 'App.Main_Set.Add', 
-                    key: 'demo_comments', 
-                    data: JSON.stringify(setData)
-                }
-
-            $.ajax({
-              url: '/okayapi.php',
-              dataType: 'json',
-              data: params,
-            }).done(function (rs) {
-                if (rs.data && rs.data.err_code == 0) {
-                    _self.tips = '留言成功！';
-
-                    // 重置内容
-                    _self.new_comment_content = ''
-
-                    _self.loadComments(null)
-                } else {
-                    console.log(rs.data.err_msg)       
-                }
-            });
-        }
-    }
-})
-
-appComments.init();
-          </script>
-
-</body></html>
+</body>
+</html>
