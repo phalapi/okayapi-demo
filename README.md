@@ -48,4 +48,15 @@ PC版本效果
 
 ![](http://7xiz2f.com1.z0.glb.clouddn.com/20180127125738_3a984bea27b0e3986638ca11e1b712c7)
 
+## 3、更多其他示例
+
+更多示例，包括有：在线留言、二维码、条形码、验证码等。  
+
+### 在线示例
+
+最终实现效果，请访问：[http://demo.okayapi.com/soeasy/#verifyCode](http://demo.okayapi.com/soeasy/#verifyCode)  
+
+### 运行效果截图
+
+![](http://7xiz2f.com1.z0.glb.clouddn.com/20180214234053_d68954e8ca750b68f331f38735374faa)
 
