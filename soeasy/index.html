@@ -59,17 +59,21 @@
           <p class="pull-right visible-xs">
             <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
           </p>
-          <div class="jumbotron">
+          <div class="well">
             <h1>在线示例大全</h1>
-            <p>本页面示例基于Vue.js + Bootstrap开发，主要演示小白接口的使用。为了更好地体验示例效果，推荐使用最新浏览器进行访问。</p>
-            <p>其他客气端，诸如C#、Android、iOS、Python等，接口用法类似。</p>
+            <ul>
+                <li>本页面示例基于Vue.js + Bootstrap开发，为了更好地体验示例效果，推荐使用最新浏览器进行访问。</li>
+                <li>其他客户端，诸如C#、Android、iOS、Python等，接口用法类似。</li>
+                <li>小白后台体验账号为：api_demo / 123456</li>
+            </ul>
             <a href="https://gitee.com/dogstar/okayapi-demo" target="_blank" class="btn btn-info" >下载源代码</a>
+            <a href="http://admin.okayapi.com/" target="_blank" class="btn btn-default" >进入小白后台</a>
           </div>
 
           <!-- 在线留言（开始） -->
           <div class="row" id="appComments" >
             <div class="col-xs-12 col-lg-12">
-              <h2>在线留言</h2>
+              <h2>集合数据</h2>
 
               <h3>最新留言</h3>
               <p>显示最近10条留言。</p>
@@ -138,6 +142,43 @@
 
           </div>
           <!-- 在线留言（结束） -->
+
+         <!-- 网站访问简单统计 (START) -->
+         <div class="row" id="webVisitStat" >
+           <div class="col-xs-12 col-lg-12">
+             <h2>计数器</h2>
+           <h3>网站访问简单统计</h3>
+           <p>使用计数器，可以实现每日、每周、每月、每年、永久性的计数功能。</p>
+           <ul>
+               <li>用到的接口：<a href="http://api.okayapi.com/docs.php?service=App.Main_Counter.Setup&detail=1&type=fold" target="_blank">设定计数器（App.Main_Counter.Setup）、<a href="http://api.okayapi.com/docs.php?service=App.Main_Counter.Update&detail=1&type=fold" target="_blank">增量更新计数器（App.Main_Counter.Update）</a></li>
+           </ul>
+           <hr />
+
+           <div class="row" style="text-align: center;">
+               <div class="col-xs-6 col-sm-3 placeholder">
+                   <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
+                   <h2>{{ day_visit_times }}</h2>
+                   <p>日访问次数</p>
+               </div>
+               <div class="col-xs-6 col-sm-3 placeholder">
+                   <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
+                   <h2>{{ month_visit_times }}</h2>
+                   <p>月访问次数</p>
+               </div>
+               <div class="col-xs-6 col-sm-3 placeholder">
+                   <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
+                   <h2>{{ all_visit_times }}</h2>
+                   <p>总访问次数</p>
+               </div>
+           </div>
+              
+              <div class="alert alert-success" role="alert">
+                  <strong>划重点！</strong> 如果需要与用户绑定，例如用户每天投票的次数、游戏中玩家每个月的积分等，则可以使用<a href="http://www.okayapi.com/docs/#/v2.0/user_counter" target="_blank">用户计数器（App.User_Counter.*）</a>
+              </div>
+
+           </div>
+         </div>
+         <!-- 网站访问简单统计 (END) -->
 
           <!-- 二维码 (START) -->
           <div class="row" id="qrCode" >
@@ -249,13 +290,14 @@
 
            </div>
            </div>
-         <!-- 条形码 (END) -->
+         <!-- 验证码 (END) -->
 
       </div> <!-- 全部示例 END -->
 
         <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
           <div class="list-group">
-            <a href="#appComments" class="list-group-item">在线留言</a>
+            <a href="#appComments" class="list-group-item">集合数据</a>
+            <a href="#webVisitStat" class="list-group-item">计数器</a>
             <a href="#qrCode" class="list-group-item">二维码</a>
             <a href="#barCode" class="list-group-item">条形码</a>
             <a href="#verifyCode" class="list-group-item">验证码</a>
@@ -283,8 +325,13 @@
   
     <!-- 在线留言 -->
     <script src="./comments.js" ></script>
+    <!-- 网站统计 -->
+    <script src="./webstat.js" ></script>
+    <!-- 二维码 -->
     <script src="./qrcode.js" ></script>
+    <!-- 条形码 -->
     <script src="./barcode.js" ></script>
+    <!-- 验证码 -->
     <script src="./verifycode.js" ></script>
 
 </body>
