@@ -130,6 +130,7 @@ $(adjustSize());
             init: function() {
                 var _self = this
 
+                // 获取签到的key，优先顺序：URL参数 > COOKIE > 默认签到活动
                 _self.sign_key = getUrlParam('sign_key')
                 if (_self.sign_key == null || _self.sign_key.length == 0) {
                   _self.sign_key = $.AMUI.utils.cookie.get('s_sign_key')
@@ -159,7 +160,13 @@ $(adjustSize());
                     }
                 });
 
+                // 刷新签到人数
                 _self.refreshSignTotal()
+
+                // 定时刷新签到人数
+                setInterval(() => { 
+                    _self.refreshSignTotal();
+                }, 5000)
             },
             signUp: function (event) {
               let _self = this
