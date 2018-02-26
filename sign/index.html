@@ -118,6 +118,7 @@ $(adjustSize());
     var app = new Vue({
         el: '#app',
         data: {
+            sign_key: '',
             sign_title: '小白云栖大会',
             sign_admin: 'dogstar',
             sign_total: 0
@@ -127,36 +128,24 @@ $(adjustSize());
             init: function() {
                 var _self = this
 
+                _self.sign_key = getUrlParam('sign_key')
+                if (_self.sign_key == null || _self.sign_key.length == 0) {
+                  _self.sign_key = $.AMUI.utils.cookie.get('s_sign_key')
+                  if (_self.sign_key == undefined || _self.sign_key.length == 0) {
+                    _self.sign_key = 'demo_sign_15adf5251699118ce3f57110e210bfcf'
+                  }
+                }
+
                 $.ajax({
                   url: '/okayapi.php',
                   dataType: 'json',
-                  data: params
+                  data: { s: 'App.Main_Meta.Get', key: _self.sign_key }
                 }).done(function (rs) {
                     if (rs.data && rs.data.err_code == 0) {
-                        //console.log(rs)
-
-                        // 第一次赋值，后面则追加
-                        if (_self.note_list .length == 0) {
-                            _self.note_list = rs.data.items
-                        } else {
-                            $.each(rs.data.items, function(index, value) {
-                                _self.note_list.push(value)
-                            });
-                        }
-
-                        _self.page = rs.data.page + 1
-                        _self.note_total = rs.data.total
-
-                        adjustSize()
-                    } else if (rs.ret > 200) {
-                        // 未登录
-                        _self.tips = rs.msg
-
-                        alert('亲，请先登录~');
-
-                        window.location.href = "/mininote/login.html"
+                      _self.sign_title = rs.data.data.sign_title
+                      _self.sign_admin = rs.data.data.sign_admin
                     } else {
-                        _self.tips = rs.data.err_msg        
+                        console.log(rs.data.err_msg)        
                     }
                 });
             },
@@ -175,6 +164,13 @@ $(adjustSize());
     })
 
     app.init();
+
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return unescape(r[2]); return null; //返回参数值
+    }
+
     </script>
 
 </body>
