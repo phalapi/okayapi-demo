@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>签到吧 - 发起签到</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <link rel="alternate icon" type="image/png" href="../img/favicon.png">
+  <link rel="stylesheet" href="../css/amazeui.min.css"/>
+  <link rel="stylesheet" href="../css/wap.css">
+  <style>
+    .header {
+      text-align: center;
+    }
+    .header h1 {
+      font-size: 200%;
+      color: #333;
+      margin-top: 30px;
+    }
+    .header p {
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body style="background:#ececec">
+
+
+  <div class="pet_mian" >
+    <div class="pet_head">
+      <header data-am-widget="header"
+          class="am-header am-header-default pet_head_block">
+        <div class="am-header-left am-header-nav ">
+          <!-- <a href="#left-link" class="iconfont pet_head_jt_ico">&#xe601;</a> -->
+        </div>
+      <div class="pet_news_list_tag_name">签到吧 - 发起签到</div>
+        <div class="am-header-right am-header-nav">
+          <!-- <a href="javascript:;" class="iconfont pet_head_gd_ico">&#xe600;</a> -->
+        </div>
+      </header>
+    </div>
+
+    <div class="pet_content pet_content_list">
+      <div class="pet_grzx">
+
+
+<div class="header">
+  <div class="am-g">
+    <h1>发起签到活动</h1>
+    <p>小白接口H5开发示例，可体验使用。<br /> 采用技术：Vue + Amaze UI + jQuery + OkayApi</p>
+  </div>
+  <hr />
+</div>
+<div class="am-g">
+  <div class="am-u-lg-6 am-u-md-8 am-u-sm-centered" id="app">
+    <form method="post" class="am-form">
+      <label for="sign_title">活动名称:</label>
+      <input type="text" name="" id="sign_title" value="" placeholder="请输入活动名称"  v-model="sign_title">
+      <br>
+      <label for="sign_admin">发起人:</label>
+      <input type="text" name="" id="sign_admin" value="" placeholder="请输入发起人名字" v-model="sign_admin">
+      <br>
+    </form>
+      <div class="am-cf">
+          <button v-on:click="newSign" class="am-btn am-btn-primary am-btn-sm am-fl">立即发起</button>
+          <a href="/sign/" class="am-btn am-btn-default am-btn-sm am-fr">返回首页</a>
+      </div>
+  </div>
+</div>
+
+        <div class="pet_article_dowload">
+              <div class="pet_article_dowload_title">小白接口开发示例</div>
+              <div class="pet_article_dowload_content"><div class="pet_article_dowload_triangle"></div>
+              <div class="pet_article_dowload_ico"><img src="../img/logo_min.png" alt=""></div>
+              <div class="pet_article_dowload_content_font">
+        此H5应用是小白接口的开发示例，源代码下载请前往码云<a href="https://gitee.com/dogstar/okayapi-demo">okayapi-demo</a>。数据存在<a href="http://admin.okayapi.com/">小白后台</a>。
+              </div>
+              </div>
+          </div>
+      </div>
+
+        <div class="pet_article_footer_info">Copyright © 2018 OkayApi All Rights Reserved</div>
+    </div>
+</div> <!-- pet_mian -->
+
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/jquery.md5.js"></script>
+    <script src="../js/jquery.cookie.js"></script>
+    <script src="../js/amazeui.min.js"></script>
+    <script src="../js/vue.js"></script>
+
+    <script type="text/javascript">
+    var app = new Vue({
+        el: '#app',
+        data: {
+            sign_title: '',
+            sign_admin: '',
+            tips: ''
+        },
+        methods: {
+            newSign: function(event) {
+                if (!this.checkForm()) {
+                    return;
+                }
+
+                var _self = this
+                let sign_key = 'demo_sign_' + $.md5(this.sign_title + Date.parse(new Date()))
+
+                $.ajax({
+                  url: '/okayapi.php',
+                  dataType: 'json',
+                  data: { s: 'App.Main_Meta.Create', key: sign_key, data: JSON.stringify({ sign_title: sign_title, sign_admin: sign_admin }) }
+                }).done(function (rs) {
+                    if (rs.data && rs.data.err_code == 0) {
+                        $.cookie('s_sign_key', sign_key, { expires: 86400 * 30, path: '/', domain: 'demo.okayapi.com'});
+
+                        window.location.href = '/sign/index.html?sign_key=' + sign_key;
+                    } else {
+                        alert(rs.data.err_msg)        
+                    }
+                });
+            },
+            checkForm: function() {
+                if (this.sign_title.length == 0) {
+                    alert('请先输入活动名称！');
+                    return false;
+                }
+                if (this.sign_admin.length == 6) {
+                    alert('请先输入活动发起人！');
+                    return false;
+                }
+
+                return true;
+            }
+        }
+    })
+    </script>
+
+</body>
+</html>

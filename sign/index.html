@@ -1,0 +1,181 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <link rel="alternate icon" type="image/png" href="../img/favicon.png">
+  <link rel="stylesheet" href="../css/amazeui.min.css">
+  <link rel="stylesheet" href="../css/wap.css">
+  <title>签到吧</title>
+</head>
+<body style="background:#ececec">
+  <div class="pet_mian" id="app" >
+    <div class="pet_head">
+      <header data-am-widget="header"
+          class="am-header am-header-default pet_head_block">
+        <div class="am-header-left am-header-nav ">
+          <!-- <a href="#left-link" class="iconfont pet_head_jt_ico">&#xe601;</a> -->
+        </div>
+        <div class="pet_news_list_tag_name">签到吧</div>
+      </header>
+    </div>
+
+
+    <div class="pet_content pet_content_list">
+      <div class="pet_grzx">
+
+          <div class="pet_grzx_nr">
+              <div class="pet_grzx_ico">
+                  <img src="../img/logo.png" alt="">
+              </div>
+              <div class="pet_grzx_name">{{ sign_title }}</div>
+              <div class="pet_grzx_map">发起人：{{ sign_admin }}，已签到：{{ sign_total }} 人</div>
+
+              <ul class="like_share_block">
+                <li><a v-on:click="signUp" class="link_share_button" href="javascript:void(0)"><i class="am-icon-user"></i>我要签到</a></li>
+                <li><a class="link_share_button" href="/sign/list.html"><i class="am-icon-circle-o-notch"></i>签到名单</a></li>
+                <li><a class="link_share_button" href="/sign/new.html"><i class="am-icon-edit"></i>发起签到</a></li>
+              </ul>
+          </div>
+
+      <div class="am-modal am-modal-prompt" tabindex="-1" id="my-prompt">
+          <div class="am-modal-dialog">
+              <div class="am-modal-hd">我要签到</div>
+              <div class="am-modal-bd">
+                  您的大名是？
+                  <input type="text" class="am-modal-prompt-input">
+              </div>
+              <div class="am-modal-footer">
+                  <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+                  <span class="am-modal-btn" data-am-modal-confirm>签到</span>
+              </div>
+          </div>
+      </div>
+
+
+<div class="pet_article_dowload">
+      <div class="pet_article_dowload_title">小白接口开发示例</div>
+      <div class="pet_article_dowload_content"><div class="pet_article_dowload_triangle"></div>
+      <div class="pet_article_dowload_ico"><img src="../img/logo_min.png" alt=""></div>
+      <div class="pet_article_dowload_content_font">
+此H5应用是小白接口的开发示例，源代码下载请前往码云<a href="https://gitee.com/dogstar/okayapi-demo">okayapi-demo</a>。数据存在<a href="http://admin.okayapi.com/">小白后台</a>。
+      </div>
+      </div>
+  </div>
+        </div>
+
+        <div class="pet_article_footer_info">Copyright © 2018 OkayApi All Rights Reserved</div>
+      </div>
+    </div>
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/vue.js"></script>
+    <script src="../js/amazeui.min.js"></script>
+
+    <script>
+function adjustSize() {
+
+    // 动态计算新闻列表文字样式
+    auto_resize();
+    $(window).resize(function() {
+        auto_resize();
+    });
+    /**
+    $('.am-list-thumb img').load(function(){
+        auto_resize();
+    });
+    $('.pet_article_like li:last-child').css('border','none');
+        **/
+        function auto_resize(){
+        $('.pet_list_one_nr').height($('.pet_list_one_img').height());
+                // alert($('.pet_list_one_nr').height());
+    }
+        $('.pet_article_user').on('click',function(){
+            if($('.pet_article_user_info_tab').hasClass('pet_article_user_info_tab_show')){
+                $('.pet_article_user_info_tab').removeClass('pet_article_user_info_tab_show').addClass('pet_article_user_info_tab_cloes');
+            }else{
+                $('.pet_article_user_info_tab').removeClass('pet_article_user_info_tab_cloes').addClass('pet_article_user_info_tab_show');
+            }
+        });
+
+        $('.pet_head_gd_ico').on('click',function(){
+            $('.pet_more_list').addClass('pet_more_list_show');
+       });
+        $('.pet_more_close').on('click',function(){
+            $('.pet_more_list').removeClass('pet_more_list_show');
+        });
+}
+
+$(adjustSize());
+</script>
+
+
+
+    <script type="text/javascript">
+    // love yoyo forever
+
+    var app = new Vue({
+        el: '#app',
+        data: {
+            sign_title: '小白云栖大会',
+            sign_admin: 'dogstar',
+            sign_total: 0
+        },
+
+        methods: {
+            init: function() {
+                var _self = this
+
+                $.ajax({
+                  url: '/okayapi.php',
+                  dataType: 'json',
+                  data: params
+                }).done(function (rs) {
+                    if (rs.data && rs.data.err_code == 0) {
+                        //console.log(rs)
+
+                        // 第一次赋值，后面则追加
+                        if (_self.note_list .length == 0) {
+                            _self.note_list = rs.data.items
+                        } else {
+                            $.each(rs.data.items, function(index, value) {
+                                _self.note_list.push(value)
+                            });
+                        }
+
+                        _self.page = rs.data.page + 1
+                        _self.note_total = rs.data.total
+
+                        adjustSize()
+                    } else if (rs.ret > 200) {
+                        // 未登录
+                        _self.tips = rs.msg
+
+                        alert('亲，请先登录~');
+
+                        window.location.href = "/mininote/login.html"
+                    } else {
+                        _self.tips = rs.data.err_msg        
+                    }
+                });
+            },
+            signUp: function (event) {
+              $('#my-prompt').modal({
+                relatedTarget: this,
+                  onConfirm: function(e) {
+                    $.cookie('mn_city', e.data, { expires: 86400, path: '/', domain: 'demo.okayapi.com'});
+                  },
+                  onCancel: function(e) {
+                    //alert('不想说!');
+                  }
+               });
+            }
+        }
+    })
+
+    app.init();
+    </script>
+
+</body>
+  </html>
