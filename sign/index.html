@@ -35,7 +35,7 @@
 
               <ul class="like_share_block">
                 <li><a v-on:click="signUp" class="link_share_button" href="javascript:void(0)"><i class="am-icon-user"></i>我要签到</a></li>
-                <li><a class="link_share_button" href="/sign/list.html"><i class="am-icon-circle-o-notch"></i>签到名单</a></li>
+                <li><a class="link_share_button" v-bind:href="sign_list_url"><i class="am-icon-circle-o-notch"></i>签到名单</a></li>
                 <li><a class="link_share_button" href="/sign/new.html"><i class="am-icon-edit"></i>发起签到</a></li>
               </ul>
           </div>
@@ -122,6 +122,7 @@ $(adjustSize());
             sign_key: '',
             sign_title: '小白云栖大会',
             sign_admin: 'dogstar',
+            sign_list_url: 'http://admin.okayapi.com/?r=Data/MainSetList',
             sign_total: 0
         },
 
@@ -139,6 +140,8 @@ $(adjustSize());
                     $.cookie('s_sign_key', _self.sign_key, { expires: 86400 * 30, path: '/', domain: 'demo.okayapi.com'});
                   }
                 }
+
+                _self.sign_list_url = _self.sign_list_url + '&SearchForm%5Bvalue%5D=' + _self.sign_key
 
                 let qrcode_url = 'http://api.okayapi.com/?service=Ext.QrCode.Png&data=' + encodeURIComponent('http://demo.okayapi.com/sign/?sign_key=' + _self.sign_key)
                 $("#qrcode_img").attr('src', qrcode_url)
