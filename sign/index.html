@@ -133,6 +133,9 @@ $(adjustSize());
                   _self.sign_key = $.AMUI.utils.cookie.get('s_sign_key')
                   if (_self.sign_key == undefined || _self.sign_key.length == 0) {
                     _self.sign_key = 'demo_sign_15adf5251699118ce3f57110e210bfcf'
+                  } else {
+                    // 刷新key
+                    $.cookie('s_sign_key', _self.sign_key, { expires: 86400 * 30, path: '/', domain: 'demo.okayapi.com'});
                   }
                 }
 
