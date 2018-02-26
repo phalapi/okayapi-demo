@@ -112,7 +112,7 @@
                 $.ajax({
                   url: '/okayapi.php',
                   dataType: 'json',
-                  data: { s: 'App.Main_Meta.Create', key: sign_key, data: JSON.stringify({ sign_title: sign_title, sign_admin: sign_admin }) }
+                  data: { s: 'App.Main_Meta.Create', key: sign_key, data: JSON.stringify({ sign_title: _self.sign_title, sign_admin: _self.sign_admin }) }
                 }).done(function (rs) {
                     if (rs.data && rs.data.err_code == 0) {
                         $.cookie('s_sign_key', sign_key, { expires: 86400 * 30, path: '/', domain: 'demo.okayapi.com'});
