@@ -150,7 +150,7 @@
         $.ajax({
           url: '/okayapi.php',
           dataType: 'json',
-          data: { s: 'App.Table.Get', id: 1 } 
+          data: { s: 'App.Table.Get', id: 2, model_name: 'demo_post' } 
         }).done(function (rs) {
 
             if (rs.data && rs.data.err_code == 0) {
