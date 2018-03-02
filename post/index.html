@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<!-- saved from url=(0040)http://amazeui.org/examples/landing.html -->
+<html class="am-touch js cssanimations"><head lang="zh"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <title>简易专题页</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <link rel="alternate icon" type="image/png" href="../img/favicon.png">
+  <link rel="stylesheet" href="../css/amazeui.min.css">
+  <style>
+    .get {
+      background: #1E5B94;
+      color: #fff;
+      text-align: center;
+      padding: 100px 0;
+    }
+
+    .get-title {
+      font-size: 200%;
+      border: 2px solid #fff;
+      padding: 20px;
+      display: inline-block;
+    }
+
+    .get-btn {
+      background: #fff;
+    }
+
+    .detail {
+      background: #fff;
+    }
+
+    .detail-h2 {
+      text-align: center;
+      font-size: 150%;
+      margin: 40px 0;
+    }
+
+    .detail-h3 {
+      color: #1f8dd6;
+    }
+
+    .detail-p {
+      color: #7f8c8d;
+    }
+
+    .detail-mb {
+      margin-bottom: 30px;
+    }
+
+    .hope {
+      background: #0bb59b;
+      padding: 50px 0;
+    }
+
+    .hope-img {
+      text-align: center;
+    }
+
+    .hope-hr {
+      border-color: #149C88;
+    }
+
+    .hope-title {
+      font-size: 140%;
+    }
+
+    .about {
+      background: #fff;
+      padding: 40px 0;
+      color: #7f8c8d;
+    }
+
+    .about-color {
+      color: #34495e;
+    }
+
+    .about-title {
+      font-size: 180%;
+      padding: 30px 0 50px 0;
+      text-align: center;
+    }
+
+    .footer p {
+      color: #7f8c8d;
+      margin: 0;
+      padding: 15px 0;
+      text-align: center;
+      background: #2d3e50;
+    }
+  </style>
+</head>
+<body class="am-with-topbar-fixed-top">
+<header class="am-topbar am-topbar-fixed-top">
+  <div class="am-container">
+    <h1 class="am-topbar-brand">
+      <a href="#">简易专题页</a>
+    </h1>
+
+    <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-secondary am-show-sm-only am-collapsed" data-am-collapse="{target: &#39;#collapse-head&#39;}"><span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
+
+    <div class="am-topbar-collapse am-collapse" id="collapse-head" style="height: 20px;">
+      <ul class="am-nav am-nav-pills am-topbar-nav">
+        <li ><a href="http://www.okayapi.com/?f=post">小白接口</a></li>
+        <li><a href="https://gitee.com/dogstar/okayapi-demo">示例源代码</a></li>
+      </ul>
+
+    </div>
+  </div>
+</header>
+
+<div class="get">
+  <div class="am-g">
+    <div class="am-u-lg-12">
+
+      <p>
+        以下页面内容，读取于自定义模型：demo_post，使用前，需要在小白后台添加此模型，并添加以下字段：<br />
+        1、post_title  varchar(1024)  专题页标题；  2、post_content  text   专题页内容
+      </p>
+      <p>
+        <a href="http://admin.okayapi.com/index.php?r=Data/MyModelsCreate" class="am-btn am-btn-sm get-btn">去创建自定义模型√</a>
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="detail">
+  <div class="am-g am-container" id="post_content">
+  正在拼命加载中……
+  </div>
+</div>
+
+<footer class="footer">
+  <p>© 2017-2018 <a href="http://www.okayapi.com/?f=fabiao" target="_blank">小白接口 OkayApi.COM </a> All Rights Reserved. </p>
+</footer>
+
+
+<!--[if (gte IE 9)|!(IE)]><!-->
+<script src="../js/jquery.min.js"></script>
+<!--<![endif]-->
+<script src="../js/amazeui.min.js"></script>
+<script src="../js/vue.js"></script>
+
+
+    <script type="text/javascript">
+    function showPost() {
+        $.ajax({
+          url: '/okayapi.php',
+          dataType: 'json',
+          data: { s: 'App.Table.Get', id: 1 } 
+        }).done(function (rs) {
+
+            if (rs.data && rs.data.err_code == 0) {
+              $(document).attr('title',rs.data.data.post_title + " - 简易专题页");
+
+              $("#post_content").html(rs.data.data.post_content);
+            } else {
+                console.log(rs.data.err_msg);
+            }
+        });
+    }
+
+    showPost();
+    </script>
+
+</body></html>
