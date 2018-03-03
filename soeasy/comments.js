@@ -1,8 +1,9 @@
-  Vue.component("page",{
+// 分页参考自：https://www.cnblogs.com/cqsjs/p/5772834.html?utm_source=itdadao&utm_medium=referral
+Vue.component("page",{
       template:"#page",
         data:function(){
-            let allpage = 0
 
+            let total = 0
             let _self = this
             let params = { 
                 s: 'App.Main_Set.Count', 
@@ -11,20 +12,22 @@
 
             $.ajax({
                 url: '/okayapi.php',
+                async: false,
                 dataType: 'json',
                 data: params
             }).done(function (rs) {
                 if (rs.data && rs.data.err_code == 0) {
-                    allpage = rs.data.total
+                    total = rs.data.total
                 } else {
                     // console.log(rs.data.err_msg)
                 }
             });
 
+
           return{
             current: 1,
-            showItem: 5,
-            allpage: allpage
+            showItem: 10,
+            allpage: Math.floor(total / 10) + 1
           }
         },
         computed:{
@@ -54,6 +57,8 @@
           if(index == this.current) return;
             this.current = index;
             //这里可以发送ajax请求
+
+            appComments.loadComments(null, index)
         }
       }
     })
@@ -72,15 +77,15 @@ var appComments = new Vue({
 
             this.loadComments(null)
         },
-        loadComments: function (event) {
+        loadComments: function (event, page) {
             let _self = this
-                let params = { 
-                    s: 'App.Main_Set.GetList', 
-                    key: 'demo_comments', 
-                    page: 1, 
-                    perpage: 10,
-                    sort: '2'
-                }
+            let params = { 
+                s: 'App.Main_Set.GetList', 
+                key: 'demo_comments', 
+                page: page || 1, 
+                perpage: 10,
+                sort: '2'
+            }
 
             $.ajax({
                 url: '/okayapi.php',
