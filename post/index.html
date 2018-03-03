@@ -150,20 +150,28 @@
         $.ajax({
           url: '/okayapi.php',
           dataType: 'json',
-          data: { s: 'App.Table.Get', id: 2, model_name: 'demo_post' } 
+          data: { s: 'App.Table.Get', id: getUrlParam('id'), model_name: 'demo_post' } 
         }).done(function (rs) {
 
             if (rs.data && rs.data.err_code == 0) {
+              // 修改页面标题
               $(document).attr('title',rs.data.data.post_title + " - 简易专题页");
 
+              // 渲染页面内容
               $("#post_content").html(rs.data.data.post_content);
             } else {
-                console.log(rs.data.err_msg);
+              $("#post_content").html('<font color="red">' + rs.msg + "<br/>" + rs.data.err_msg + '<br/></font>');
             }
         });
     }
 
     showPost();
+
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return unescape(r[2]); return null; //返回参数值
+    }
     </script>
 
 </body></html>
