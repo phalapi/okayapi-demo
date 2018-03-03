@@ -101,10 +101,22 @@
               </tbody>
               </table>
               
+              <page></page>
+              
               <div class="alert alert-success" role="alert">
                   <strong>划重点！</strong> 一对多关系的数据，可以使用集合数据。如果集合数据与用户有关，则使用<a href="http://www.okayapi.com/docs/#/v2.0/user_set" target="_blank">用户集合数据（App.User_Set.*）</a>；如果与用户无关，则可使用<a href="http://www.okayapi.com/docs/#/v2.0/main_set" target="_blank" >应用集合数据（App.Main_Set.*）</a>。
               </div>
             </div>
+
+            <script type="text/x-template" id="page">
+                <ul class="pagination" >
+                    <li v-show="current != 1" @click="current-- && goto(current)" ><a href="#">上一页</a></li>
+                    <li v-for="index in pages" @click="goto(index)" :class="{'active':current == index}" :key="index">
+                      <a href="#" >{{index}}</a>
+                    </li>
+                    <li v-show="allpage != current && allpage != 0 " @click="current++ && goto(current++)"><a href="#" >下一页</a></li>
+                </ul>
+            </script>
 
 
             <div class="col-xs-12 col-lg-12" data-example-id="basic-forms">
