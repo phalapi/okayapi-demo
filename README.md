@@ -1,3 +1,8 @@
+# 小程序接入示例
+
+![](http://7xiz2f.com1.z0.glb.clouddn.com/20180325000649_bb40b3f79cdbc7d768f1a09c406d41a9)  
+
+
 # 小白接口H5示例集合
 
 > 新技能：成功开通[小白接口](http://www.okayapi.com/?f=gitee)后，将okayapi.php中的app_key和app_secrect换成自己的，即可马上使用这些示例应用啦~~
