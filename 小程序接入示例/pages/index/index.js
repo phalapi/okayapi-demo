@@ -1,5 +1,5 @@
 //index.js
-var okayapi = require('../../utils/okayapi.js')  
+let okayapi = require('../../utils/okayapi.js')  
 
 //获取应用实例
 const app = getApp()
@@ -18,7 +18,6 @@ Page({
     })
   },
   onLoad: function () {
-    console.log(app.globalData.okayapiHost)
     this.okayApiHelloWorld()
 
     if (app.globalData.userInfo) {
@@ -77,7 +76,7 @@ Page({
       url: app.globalData.okayapiHost,
       data: okayapi.enryptData(params),
       success: function (wxRes) {
-        // TODO：实现你的逻辑……
+        // TODO：实现你的梦想……
         let res = wxRes.data
 
         if (res.data && res.data.err_code == 0) {
