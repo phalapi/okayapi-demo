@@ -14,6 +14,6 @@
     <text class="user-motto">{{motto}}</text>
   </view>
   <view>
-    <text color="red">提示：使用前请先修改app.json配置</text>
+    <text color="red">提示：使用前请先修改app.js配置</text>
   </view>
 </view>
