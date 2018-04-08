@@ -76,6 +76,7 @@ Page({
       url: app.globalData.okayapiHost,    // 使用小白接口的域名，或者PHP代理域名
       data: okayapi.enryptData(params),   // 如果直接调用小白接口，需要在小程序里生成签名
       method: "POST",                     // 通常情况下都可使用POST方式请求小白接口
+      header: { "Content-Type": "application/x-www-form-urlencoded" }, // 大坑：如果使用的是POST请求，一定要设置这个header，不然参数无法POST
       success: function (wxRes) {
         // TODO：实现你的梦想……
         let res = wxRes.data
