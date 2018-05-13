@@ -73,6 +73,33 @@
             <a href="http://admin.okayapi.com/" target="_blank" class="btn btn-default" >进入小白后台</a>
           </div>
 
+          <!-- 头像 (START) -->
+          <div class="row" id="avatar" >
+            <div class="col-xs-12 col-lg-12">
+              <h2>用户头像</h2>
+            <h3>随机用户头像</h3>
+            <p>根据昵称，生成一个默认的用户头像。</p>
+            <ul>
+                <li>用到的接口：<a href="http://api.okayapi.com/docs.php?service=Ext.Avatar.Show&detail=1&type=fold" target="_blank">随机用户头像</a></li>
+            </ul>
+            <hr />
+
+              <img src="http://api.okayapi.com/?s=Ext.Avatar.Show&nickname=白&size=150" />
+              <img src="http://api.okayapi.com/?s=Ext.Avatar.Show&nickname=白&size=120" />
+              <img src="http://api.okayapi.com/?s=Ext.Avatar.Show&nickname=白&size=100" />
+              <img src="http://api.okayapi.com/?s=Ext.Avatar.Show&nickname=白&size=80" />
+              <img src="http://api.okayapi.com/?s=Ext.Avatar.Show&nickname=白&size=50" />
+              <img src="http://api.okayapi.com/?s=Ext.Avatar.Show&nickname=白&size=25" />
+              <br />
+              <br />
+
+              <div class="alert alert-success" role="alert">
+                  <strong>划重点！</strong> 生成二维码接口，不需要签名，可直接使用。直接显示头像图片。
+              </div>
+          </div>
+         </div>
+         <!-- 头像 (END) -->
+
           <!-- 在线留言（开始） -->
           <div class="row" id="appComments" >
             <div class="col-xs-12 col-lg-12">
@@ -311,6 +338,7 @@
 
         <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
           <div class="list-group">
+            <a href="#avatar" class="list-group-item">用户头像</a>
             <a href="#appComments" class="list-group-item">集合数据</a>
             <a href="#webVisitStat" class="list-group-item">计数器</a>
             <a href="#qrCode" class="list-group-item">二维码</a>
