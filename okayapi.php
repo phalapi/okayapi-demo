@@ -40,6 +40,9 @@ curl_setopt($ch, CURLOPT_CONNECTTIMEOUT_MS, 10000);
 curl_setopt($ch, CURLOPT_POST, 1);
 curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
 
+// todo
+// var_dump('http://api.okayapi.com/?' . http_build_query($params));
+
 $rs = curl_exec($ch);
 curl_close($ch);
 
